@@ -4,6 +4,17 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView, RedirectView, UpdateView
+from django.shortcuts import render
+from django.http import JsonResponse
+
+
+
+def logout(request):
+    #print(request.COOKIES.get('JWT'))
+    response = JsonResponse({'result' : 'success'})
+    response.delete_cookie('JWT')
+    return response
+
 
 User = get_user_model()
 
