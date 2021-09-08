@@ -6,6 +6,7 @@ class AccountType(DjangoObjectType):
     class Meta:
         model = Account
 
+
 class StockType(DjangoObjectType):
     class Meta:
         model = Stock

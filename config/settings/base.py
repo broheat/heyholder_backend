@@ -5,6 +5,7 @@ from pathlib import Path
 
 import environ
 from datetime import timedelta
+
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # backend/
 APPS_DIR = ROOT_DIR / "backend"
@@ -42,7 +43,9 @@ LOCALE_PATHS = [str(ROOT_DIR / "locale")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
 DATABASES = {
-    "default": env.db("DATABASE_URL", default="postgres://ryulstory:gudfuf09@localhost:5432/daejuju"),
+    "default": env.db(
+        "DATABASE_URL", default="postgres://ryulstory:gudfuf09@localhost:5432/daejuju"
+    ),
 }
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
@@ -68,9 +71,6 @@ DJANGO_APPS = [
 ]
 THIRD_PARTY_APPS = [
     "crispy_forms",
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
 ]
 
 LOCAL_APPS = [
@@ -78,10 +78,9 @@ LOCAL_APPS = [
     "graphene_django",
     "graphql_jwt.refresh_token.apps.RefreshTokenConfig",
     "corsheaders",
-    'social_django',
+    "social_django",
     "stock.apps.StockConfig",
     "post.apps.PostConfig",
-
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -97,16 +96,15 @@ MIGRATION_MODULES = {"sites": "backend.contrib.sites.migrations"}
 # https://docs.djangoproject.com/en/dev/ref/settings/#authentication-backends
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
-    'graphql_jwt.backends.JSONWebTokenBackend',
+    "graphql_jwt.backends.JSONWebTokenBackend",
     "social_core.backends.kakao.KakaoOAuth2",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
 AUTH_USER_MODEL = "users.User"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
-LOGIN_REDIRECT_URL = "users:redirect"
+LOGIN_REDIRECT_URL = "/"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
-LOGIN_URL = "account_login"
+
 
 # PASSWORDS
 # ------------------------------------------------------------------------------
@@ -281,24 +279,21 @@ SOCIALACCOUNT_ADAPTER = "backend.users.adapters.SocialAccountAdapter"
 # Your stuff...
 # ------------------------------------------------------------------------------
 GRAPHENE = {
-    'SCHEMA': 'backend.schema.schema',
-    'MIDDLEWARE': [
-        'graphql_jwt.middleware.JSONWebTokenMiddleware',
+    "SCHEMA": "backend.schema.schema",
+    "MIDDLEWARE": [
+        "graphql_jwt.middleware.JSONWebTokenMiddleware",
     ],
 }
 
-AUTHENTICATION_BACKENDS = [
-    
-]
 
 GRAPHQL_JWT = {
-    'JWT_VERIFY_EXPIRATION': True,
-    'JWT_LONG_RUNNING_REFRESH_TOKEN': True,
-    'JWT_EXPIRATION_DELTA': timedelta(minutes=5),
-    'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=7),
+    "JWT_VERIFY_EXPIRATION": True,
+    "JWT_LONG_RUNNING_REFRESH_TOKEN": True,
+    "JWT_EXPIRATION_DELTA": timedelta(days=7),
+    "JWT_REFRESH_EXPIRATION_DELTA": timedelta(days=7),
 }
 SOCIAL_AUTH_KAKAO_KEY = "8d39a48fcc9deb3a27bae2669e0d727e"
-SOCIAL_AUTH_KAKAO_SECRET = ''
+SOCIAL_AUTH_KAKAO_SECRET = ""
 SOICAL_AUTH_URL_NAMESPACE = "social"
 
 CORS_ORIGIN_ALLOW_ALL = True
