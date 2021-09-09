@@ -106,15 +106,15 @@ class Query(graphene.ObjectType):
     allstock = graphene.List(StockType)
     account = graphene.Field(AccountType)
     havestock = graphene.Field(StockType, code=graphene.String(required=True))
-    totalamount = graphene.String(code=graphene.String(required=True))
+    totalAmount = graphene.String(code=graphene.String(required=True))
 
     @login_required
-    def resolve_totalamount(self, info, **kwargs):
+    def resolve_totalAmount(self, info, **kwargs):
         code = kwargs.get("code")
-        totalamount = Stock.objects.filter(code=code).aggregate(Sum("amount"))[
+        totalAmount = Stock.objects.filter(code=code).aggregate(Sum("amount"))[
             "amount__sum"
         ]
-        return totalamount
+        return totalAmount
 
     @login_required
     def resolve_allstock(self, info, **kwargs):
