@@ -137,7 +137,7 @@ class Query(graphene.ObjectType):
             stock = Stock.objects.get(user_id=user.id, code=code)
             return stock
         except Stock.DoesNotExist:
-            return False
+            return None
 
 
 class Mutation(graphene.ObjectType):
