@@ -6,8 +6,10 @@ class StockConfig(AppConfig):
     name = "stock"
     verbose_name = _("Stock")
 
+
+"""
     def ready(self):
-        try:
-            import stock.signals  # noqa F401
-        except ImportError:
-            pass
+        from . import views
+
+        views.start()
+"""

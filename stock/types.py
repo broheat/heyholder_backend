@@ -1,5 +1,5 @@
 from graphene_django import DjangoObjectType
-from .models import Account, Stock
+from .models import Account, Research, Stock
 
 
 class AccountType(DjangoObjectType):
@@ -10,3 +10,8 @@ class AccountType(DjangoObjectType):
 class StockType(DjangoObjectType):
     class Meta:
         model = Stock
+
+
+class ResearchType(DjangoObjectType):
+    class Meta:
+        model = Research

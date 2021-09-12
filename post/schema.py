@@ -97,7 +97,6 @@ class Query(graphene.ObjectType):
 
     @login_required
     def resolve_allcomment(self, info, **kwagrs):
-        code = kwagrs.get("code")
         posting_id = kwagrs.get("id")
         post = Post.objects.get(id=posting_id)
         comments = Comment.objects.filter(post=post)

@@ -1,14 +1,14 @@
 import graphene
-from .types import AccountType, StockType
-from .models import Account, Stock
+from .types import AccountType, StockType, ResearchType
+from .models import Account, Stock, Research
 from .crypt import AESCipher
 from graphql_jwt.decorators import login_required
-from .views import getStockNamu
+from .views import getStockNamu, getResearch
 from django.db.models import Sum
 
 
 # 유저로부터 증권사 아이디와 비밀번호 받기.
-class GetaccountMutation(graphene.Mutation):
+class GetAccountMutation(graphene.Mutation):
     class Arguments:
         company_id = graphene.String()
         company_secret = graphene.String()
@@ -48,9 +48,10 @@ class GetaccountMutation(graphene.Mutation):
             )
             account.save()
 
-        return GetaccountMutation(account=account)
+        return GetAccountMutation(account=account)
 
 
+# 증권 계좌 조회
 class GetStockMutation(graphene.Mutation):
     class Arguments:
         click = graphene.Boolean()
@@ -72,14 +73,14 @@ class GetStockMutation(graphene.Mutation):
         if dic:
             # 기존 자료 삭제 후 재 생성.
             try:
-                Stock.objects.filter(user_id=user_id, company=1).delete()
+                Stock.objects.filter(user_id=user_id, company="나무").delete()
                 for code, value in dic.items():
                     stock = Stock.objects.create(
                         user_id=user_id,
                         code=code,
                         amount=value[1],
                         stockname=value[0],
-                        company=1,
+                        company="나무",
                     )
                     stock.save()
                     result = True
@@ -91,7 +92,7 @@ class GetStockMutation(graphene.Mutation):
                         code=code,
                         amount=value[1],
                         stockname=value[0],
-                        company=1,
+                        company="나무",
                     )
                     stock.save()
                     result = True
@@ -107,6 +108,12 @@ class Query(graphene.ObjectType):
     account = graphene.Field(AccountType)
     havestock = graphene.Field(StockType, code=graphene.String(required=True))
     totalAmount = graphene.String(code=graphene.String(required=True))
+    allResearch = graphene.List(ResearchType, code=graphene.String(required=True))
+
+    @login_required
+    def resolve_allResearch(self, info, **kwargs):
+        code = kwargs.get("code")
+        return Research.objects.filter(code=code)
 
     @login_required
     def resolve_totalAmount(self, info, **kwargs):
@@ -120,7 +127,6 @@ class Query(graphene.ObjectType):
     def resolve_allstock(self, info, **kwargs):
         user = info.context.user
         stock = Stock.objects.filter(user_id=user.id)
-        print(user, stock)
         return stock
 
     @login_required
@@ -141,5 +147,5 @@ class Query(graphene.ObjectType):
 
 
 class Mutation(graphene.ObjectType):
-    get_account = GetaccountMutation.Field()
+    get_account = GetAccountMutation.Field()
     get_stock = GetStockMutation.Field()
