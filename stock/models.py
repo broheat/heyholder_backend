@@ -32,6 +32,7 @@ class Research(models.Model):
     link = models.URLField(max_length=500)
     day = models.DateField(verbose_name="작성일")
     company = models.CharField(max_length=10)
+    documentid = models.CharField(max_length=20, blank=True)
 
     def __str__(self):
         return (

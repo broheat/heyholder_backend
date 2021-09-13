@@ -6,9 +6,9 @@ import re
 미래에셋증권 리서치 추출
 """
 
-url = r"https://securities.miraeasset.com/bbs/board/message/list.do?categoryId=1545"
+mrUrl = r"https://securities.miraeasset.com/bbs/board/message/list.do?categoryId=1545"
 
-response = requests.get(url)
+response = requests.get(mrUrl)
 
 if response.status_code == 200:
     html = response.text

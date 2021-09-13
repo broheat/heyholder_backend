@@ -3,7 +3,7 @@ from .types import AccountType, StockType, ResearchType
 from .models import Account, Stock, Research
 from .crypt import AESCipher
 from graphql_jwt.decorators import login_required
-from .views import getStockNamu, getResearch
+from .views import getStockNamu
 from django.db.models import Sum
 
 
