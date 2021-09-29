@@ -2,9 +2,8 @@
 Base settings to build other settings files upon.
 """
 from pathlib import Path
-
 import environ
-from datetime import timedelta
+
 
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # backend/
@@ -284,13 +283,8 @@ GRAPHENE = {
         "graphql_jwt.middleware.JSONWebTokenMiddleware",
     ],
 }
-
-
 GRAPHQL_JWT = {
-    "JWT_VERIFY_EXPIRATION": True,
-    "JWT_LONG_RUNNING_REFRESH_TOKEN": True,
-    "JWT_EXPIRATION_DELTA": timedelta(days=7),
-    "JWT_REFRESH_EXPIRATION_DELTA": timedelta(days=7),
+    "JWT_ALLOW_ARGUMENT": True,
 }
 SOCIAL_AUTH_KAKAO_KEY = "8d39a48fcc9deb3a27bae2669e0d727e"
 SOCIAL_AUTH_KAKAO_SECRET = ""

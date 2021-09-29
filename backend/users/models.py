@@ -12,7 +12,6 @@ class User(AbstractUser):
     first_name = None  # type: ignore
     last_name = None  # type: ignore
     agree_1 = models.BooleanField("개인정보처리방침 동의", default=False)
-    name_change = models.BooleanField("이름 변경", default=False)
 
     def get_absolute_url(self):
         """Get url for user's detail view.
