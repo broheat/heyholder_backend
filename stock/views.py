@@ -26,6 +26,11 @@ def getStockNamu(company_id, company_secret):
         balance_req = s.post(balance_url, data=balance_data)
 
         soup = BeautifulSoup(balance_req.text, "lxml")
+        stockList = soup.select_one("#totalListRow > tr > td")
+
+        if stockList is None:
+            return ValueError
+            
         type = soup.select_one("#totalListRow > tr:nth-child(1)>th")
 
         while type is not None and type.text == "주식":

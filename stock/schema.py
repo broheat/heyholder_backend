@@ -96,9 +96,11 @@ class GetStockMutation(graphene.Mutation):
                     )
                     stock.save()
                     result = True
-        else:
+        elif dic is ValueError:
             result = False
             raise PermissionError("아이디와 비번을 다시 한번 확인 해주세요.")
+        else:
+            result = True
 
         return GetStockMutation(result=result)
 

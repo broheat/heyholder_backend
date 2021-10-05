@@ -72,7 +72,7 @@ class Create2CommentMutaion(graphene.Mutation):
             )
             comment.save()
         except Post.DoesNotExist:
-            raise uPermissionError("잘못된 접속 방법입니다.")
+            raise PermissionError("잘못된 접속 방법입니다.")
         return CreateCommentMutaion(comment=comment)
 
 
