@@ -32,6 +32,7 @@ class ParticipatePostMutation(graphene.Mutation):
         id = graphene.ID()
         number_of_stock = graphene.Int()
     participant = graphene.Field(ParticipantType)    
+    
     @login_required
     def mutate(self,info,**kwargs):
         user = info.context.user
@@ -42,10 +43,15 @@ class ParticipatePostMutation(graphene.Mutation):
 
         post = Post.objects.get(id=posting_id)
         
-        participant = Participant.objects.create(
-            user= user, post=post, number_of_stock=number_of_stock
-        )
-        participant.save()
+        try:
+            participant = Participant.objects.get(user=user, post=post)
+            participant.number_of_stock = number_of_stock
+            participant.save()
+        except Participant.DoesNotExist:
+            participant = Participant.objects.create(user= user, post=post, number_of_stock=number_of_stock)
+            participant.save()
+
+        print(participant)
         return ParticipatePostMutation(participant=participant)
         
 class CreateCommentMutaion(graphene.Mutation):
