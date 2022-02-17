@@ -10,6 +10,7 @@ class Stock(models.Model):
     code = models.CharField(max_length=6)
     amount = models.IntegerField(default=0)
     company = models.CharField(max_length=10)
+    outstandingShare = models.IntegerField(default=0)
 
 
 # 증권사에 대한 고객 아이디와 비밀번호에 대한 모델

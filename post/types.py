@@ -1,5 +1,5 @@
 from graphene_django import DjangoObjectType
-from .models import Post, Comment
+from .models import Participant, Post, Comment
 
 class PostType(DjangoObjectType):
     class Meta:
@@ -8,3 +8,7 @@ class PostType(DjangoObjectType):
 class CommentType(DjangoObjectType):
     class Meta:
         model = Comment
+
+class ParticipantType(DjangoObjectType):
+    class Meta:
+        model = Participant

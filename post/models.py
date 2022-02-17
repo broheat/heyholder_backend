@@ -13,9 +13,16 @@ class Post(models.Model):
     contents = models.TextField(verbose_name="내용")
     created_at = models.DateField(auto_now_add=True, verbose_name="작성일")
     amount = models.IntegerField()
+    participant_stock = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
+    
+class Participant(models.Model):
+    post = models.ForeignKey("Post", on_delete=models.CASCADE)
+    user = models.ForeignKey(base.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    number_of_stock = models.IntegerField(default=0)
+    created_at = models.DateField(auto_now_add=True, verbose_name="작성일")
 
 
 class Comment(models.Model):
